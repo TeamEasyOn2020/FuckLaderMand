@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace KernFunk.NUnitTest
+namespace KernFunk.UnitTest
 {
     public class Tests
     {

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernFunkLibrary", "KernFunkLibrary\KernFunkLibrary.csproj", "{DF123023-2701-42A8-B541-075D73EC72D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernFunk.NUnitTest", "KernFunk.NUnitTest\KernFunk.NUnitTest.csproj", "{90879944-C847-4D52-AEFD-A5421D5D1884}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernFunk.UnitTest", "KernFunk.NUnitTest\KernFunk.UnitTest.csproj", "{90879944-C847-4D52-AEFD-A5421D5D1884}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
