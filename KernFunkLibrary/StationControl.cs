@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KernFunkLibrary;
 using UsbSimulator;
 
 namespace Ladeskab
@@ -22,7 +23,7 @@ namespace Ladeskab
         private LadeskabState _state;
         private IUsbCharger _charger;
         private int _oldId;
-
+        private Door _door = new Door();
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
