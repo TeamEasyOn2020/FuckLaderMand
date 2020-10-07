@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using KernFunkLibrary;
 using UsbSimulator;
 
-namespace Ladeskab
+namespace KernFunkLibrary.Ladeskab
 {
     public class StationControl
     {
