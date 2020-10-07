@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UsbSimulator
+namespace KernFunkLibrary
 {
     public class CurrentEventArgs : EventArgs
     {

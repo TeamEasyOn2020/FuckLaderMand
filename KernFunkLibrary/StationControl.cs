@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using KernFunkLibrary;
 using UsbSimulator;
 
-namespace Ladeskab
+namespace KernFunkLibrary
 {
     public class StationControl
     {
@@ -25,6 +25,8 @@ namespace Ladeskab
         private int _oldId;
         private Door _door = new Door();
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
+
+
 
         // Her mangler constructor
 
