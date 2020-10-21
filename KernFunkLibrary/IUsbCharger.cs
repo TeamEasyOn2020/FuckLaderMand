@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace KernFunkLibrary.UsbSimulator
+
+namespace KernFunkLibrary
+
 {
     public class CurrentEventArgs : EventArgs
     {

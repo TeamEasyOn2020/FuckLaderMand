@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Timers;
 
-namespace KernFunkLibrary.UsbSimulator
+
+namespace KernFunkLibrary
+
 {
     public class UsbChargerSimulator : IUsbCharger
     {

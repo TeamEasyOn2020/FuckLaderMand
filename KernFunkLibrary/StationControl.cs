@@ -8,7 +8,9 @@ using KernFunkLibrary;
 using UsbSimulator;
 using Ladeskab;
 
-namespace KernFunkLibrary.Ladeskab
+
+namespace KernFunkLibrary
+
 {
     public class RfidEventArgs : EventArgs
 	{
@@ -32,6 +34,8 @@ namespace KernFunkLibrary.Ladeskab
         private Door _door = new Door();
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
         event EventHandler<RfidEventArgs> RfidRegisteredEvent;
+
+
 
         // Her mangler constructor
         public StationControl ()
