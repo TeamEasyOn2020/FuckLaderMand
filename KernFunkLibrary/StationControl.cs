@@ -6,9 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using KernFunkLibrary;
 using UsbSimulator;
+using Ladeskab;
+
 
 namespace KernFunkLibrary
+
 {
+    public class RfidEventArgs : EventArgs
+	{
+		public int Id { get; set; }
+	}
+
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
@@ -25,10 +33,15 @@ namespace KernFunkLibrary
         private int _oldId;
         private Door _door = new Door();
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
+        event EventHandler<RfidEventArgs> RfidRegisteredEvent;
 
 
 
         // Her mangler constructor
+        public StationControl ()
+        {
+            
+        }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
@@ -85,5 +98,9 @@ namespace KernFunkLibrary
         }
 
         // Her mangler de andre trigger handlere
+        HandleRfidRegisteretEvent(object sender, RfidEventArgs e)
+        {
+            RfidDetected(e.Id);
+        }
     }
 }

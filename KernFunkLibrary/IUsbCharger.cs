@@ -1,6 +1,8 @@
 ﻿using System;
 
+
 namespace KernFunkLibrary
+
 {
     public class CurrentEventArgs : EventArgs
     {
