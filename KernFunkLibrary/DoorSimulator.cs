@@ -6,7 +6,8 @@ namespace KernFunkLibrary
     {
         public event EventHandler<DoorEventArgs> DoorEvent;
         private DoorEventArgs door;
-
+        public bool DoorOpen { get; private set; }
+        public bool DoorClosed { get; private set; }
         private void OnDoorOpened()
         {
             DoorEvent?.Invoke(this, new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
@@ -19,12 +20,14 @@ namespace KernFunkLibrary
 
         public void LockDoor()
         {
-            
+            DoorOpen = false;
+            DoorClosed = true;
         }
 
         public void UnlockDoor()
         {
-
+            DoorOpen = true;
+            DoorClosed = false;
         }
     }
 
