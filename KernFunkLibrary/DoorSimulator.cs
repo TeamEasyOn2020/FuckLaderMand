@@ -2,7 +2,7 @@
 
 namespace KernFunkLibrary
 {
-    public class Door
+    public class DoorSimulator
     {
         public event EventHandler<DoorEventArgs> DoorEvent;
         private DoorEventArgs door;
