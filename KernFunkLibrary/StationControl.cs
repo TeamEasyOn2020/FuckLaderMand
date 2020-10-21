@@ -8,7 +8,7 @@ using KernFunkLibrary;
 using UsbSimulator;
 using Ladeskab;
 
-namespace Ladeskab
+namespace KernFunkLibrary.Ladeskab
 {
     public class RfidEventArgs : EventArgs
 	{
