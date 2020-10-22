@@ -11,11 +11,6 @@ using KernFunkLibrary;
 namespace KernFunkLibrary
 
 {
-    public class RfidEventArgs : EventArgs
-	{
-		public int Id { get; set; }
-	}
-
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
@@ -28,18 +23,21 @@ namespace KernFunkLibrary
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IUsbCharger _charger;
+        private IChargerControl _chargeControl;
         private int _oldId;
         private IDoor _door;
+        private IDisplay _display;
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-        event EventHandler<RfidEventArgs> RfidRegisteredEvent;
-
+        private IRfidReader _rfidReader;
 
 
         // Her mangler constructor
-        public StationControl (IDoor door)
+        public StationControl (IDoor door, IChargerControl chargerControl, IDisplay display, IRfidReader rfidReader)
         {
             _door = door;
+            _chargeControl = chargerControl;
+            _display = display;
+            _rfidReader = rfidReader;
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -49,22 +47,22 @@ namespace KernFunkLibrary
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_chargeControl.IsConnected)
                     {
                         _door.LockDoor();
-                        _charger.StartCharge();
+                        _chargeControl.StartCharge();
                         _oldId = id;
                         using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        _display.ShowStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        _display.ShowStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
                     }
 
                     break;
@@ -77,19 +75,19 @@ namespace KernFunkLibrary
                     // Check for correct ID
                     if (id == _oldId)
                     {
-                        _charger.StopCharge();
+                        _chargeControl.StopCharge();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        _display.ShowStationMessage("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        _display.ShowStationMessage("Forkert RFID tag");
                     }
 
                     break;
@@ -101,5 +99,25 @@ namespace KernFunkLibrary
         {
             RfidDetected(e.Id);
         }
+
+        private void HandleDoorOpenEvent(object sender, DoorEventArgs e)
+        {
+            if (e.DoorOpen)
+            {
+                _display.ShowStationMessage("Tilslut Telefon");
+                _state = LadeskabState.DoorOpen;
+            }
+        }
+
+        private void HandleDoorClosed(object sender, DoorEventArgs e)
+        {
+            if(e.DoorClosed)
+            {
+                _display.ShowStationMessage("Indlæs Rfid");
+                _state = LadeskabState.Locked;
+            }
+
+        }
+        
     }
 }
