@@ -1,4 +1,4 @@
-﻿using KernFunkLibrary.UsbSimulator;
+﻿using KernFunkLibrary;
 
 namespace KernFunkLibrary
 {
@@ -6,20 +6,28 @@ namespace KernFunkLibrary
     {
         private IDisplay _display;
         private IUsbCharger _iUsbCharger;
-        public bool IsConnected { get; }
+        public bool IsConnected => _iUsbCharger.Connected;
+
+        public ChargerControlSimulator(IDisplay display, IUsbCharger usbCharger)
+        {
+            _display = display;
+            _iUsbCharger = usbCharger;
+
+            _iUsbCharger.CurrentValueEvent += HandleCurrentEvent;
+        }
         public void StartCharge()
         {
-            throw new System.NotImplementedException();
+            _iUsbCharger.StartCharge();
         }
 
         public void StopCharge()
         {
-            throw new System.NotImplementedException();
+           _iUsbCharger.StopCharge();
         }
 
         public void HandleCurrentEvent(object sender, CurrentEventArgs e)
         {
-
+            _display.ShowChargingMessage($"Current is: {e.Current}");
         }
     }
 }
