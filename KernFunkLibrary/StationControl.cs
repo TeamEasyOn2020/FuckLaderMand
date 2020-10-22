@@ -11,11 +11,6 @@ using KernFunkLibrary;
 namespace KernFunkLibrary
 
 {
-    public class RfidEventArgs : EventArgs
-	{
-		public int Id { get; set; }
-	}
-
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
