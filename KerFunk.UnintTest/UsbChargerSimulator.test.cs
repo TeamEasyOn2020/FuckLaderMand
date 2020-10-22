@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using KernFunkLibrary;
-using KernFunkLibrary.UsbSimulator;
+
 
 namespace KerFunk.UnintTest
 {
