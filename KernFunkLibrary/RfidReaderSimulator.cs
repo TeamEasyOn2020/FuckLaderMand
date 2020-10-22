@@ -12,7 +12,7 @@ namespace KernFunkLibrary
 
         public void IdRegistered()
         {
-            IdRegisteredEvent?.Invoke(this, new RfidEventArgs() {Id = Id);
+            IdRegisteredEvent?.Invoke(this, new RfidEventArgs() { Id = Id });
         }
     }
 }
