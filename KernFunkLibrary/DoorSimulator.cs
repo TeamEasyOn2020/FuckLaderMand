@@ -10,12 +10,12 @@ namespace KernFunkLibrary
         public bool DoorClosed { get; private set; }
         private void OnDoorOpened()
         {
-            DoorEvent?.Invoke(this, new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
+            DoorEvent?.Invoke(this, new DoorEventArgs() {DoorOpen = DoorOpen, DoorClosed = DoorClosed});
         }
 
         private void OnDoorClosed()
         {
-            DoorEvent?.Invoke(this, new DoorEventArgs() { DoorOpen = false, DoorClosed = true });
+            DoorEvent?.Invoke(this, new DoorEventArgs() { DoorOpen = DoorOpen, DoorClosed = DoorClosed });
         }
 
         public void LockDoor()
