@@ -8,6 +8,7 @@ namespace KernFunkLibrary
     {
         public void ShowStationMessage(string message)
         {
+            //Test Console write
             Console.WriteLine(message);
         }
         public void ShowChargingMessage(string message)

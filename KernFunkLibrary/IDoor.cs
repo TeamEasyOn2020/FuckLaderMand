@@ -7,7 +7,9 @@ namespace KernFunkLibrary
 {
     public interface IDoor
     {
-        public event EventHandler<DoorEventArgs> DoorEvent;
+        public event EventHandler<DoorEventArgs> DoorOpenEvent;
+        public event EventHandler<DoorEventArgs> DoorCloseEvent;
+
         public void LockDoor();
         public void UnlockDoor();
         public void OnDoorOpened();
