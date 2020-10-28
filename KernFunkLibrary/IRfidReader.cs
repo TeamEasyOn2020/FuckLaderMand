@@ -11,8 +11,11 @@ namespace KernFunkLibrary
 
     public interface IRfidReader
     {
+        public void SetId(int id);
+
+
         event EventHandler<RfidEventArgs> IdRegisteredEvent;
 
-        void IdRegistered();
+        void IdRegistered(RfidEventArgs e);
     }
 }
