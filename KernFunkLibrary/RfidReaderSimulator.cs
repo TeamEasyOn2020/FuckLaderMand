@@ -7,7 +7,7 @@ namespace KernFunkLibrary
 {
     public class RfidReaderSimulator : IRfidReader
     {
-        private int Id { get; set; }
+        private int Id;
         private int oldId = -100;
 
         public void SetId(int id)
