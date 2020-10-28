@@ -2,7 +2,7 @@
 
 namespace KernFunkLibrary
 {
-    public class Output : Ioutput
+    public class Output : IOutput
     {
         public void WriteLine(string msg)
         {

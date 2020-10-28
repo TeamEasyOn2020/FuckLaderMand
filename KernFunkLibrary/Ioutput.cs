@@ -1,6 +1,6 @@
 ﻿namespace KernFunkLibrary
 {
-    public interface Ioutput
+    public interface IOutput
     {
         public void WriteLine(string msg);
     }

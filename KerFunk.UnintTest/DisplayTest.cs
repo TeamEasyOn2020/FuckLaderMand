@@ -9,10 +9,12 @@ namespace KerFunk.UnintTest
     {
 
         private IDisplay uut;
+        private IOutput _output;
         [SetUp]
         public void Setup()
         {
-            uut = new DisplaySimulator();
+            _output = Substitute.For<IOutput>();
+            uut = new DisplaySimulator(_output);
         }
 
         [TestCase(null)]
