@@ -1,4 +1,5 @@
 ﻿using KernFunkLibrary;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace KerFunk.UnintTest
         public void Setup()
         {
             _door = Substitute.For<IDoor>();
-            _display = Substitute.For<IDisplay>();
+            _display = Substitute.For<IDisplay>(Substitute.For<IOutput>());
             _rfidReader = Substitute.For<IRfidReader>();
             _chargerControl = Substitute.For<IChargerControl>();
 
