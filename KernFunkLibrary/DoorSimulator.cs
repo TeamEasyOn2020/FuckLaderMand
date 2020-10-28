@@ -2,19 +2,23 @@
 
 namespace KernFunkLibrary
 {
-    public class DoorSimulator:IDoor
+    public class DoorSimulator : IDoor
     {
-        public event EventHandler<DoorEventArgs> DoorEvent;
+        public event EventHandler<DoorEventArgs> DoorOpenEvent;
+        public event EventHandler<DoorEventArgs> DoorCloseEvent;
+
+        private DoorEventArgs door;
+
         public bool DoorOpen { get; private set; }
         public bool DoorClosed { get; private set; }
         public void OnDoorOpened()
         {
-            DoorEvent?.Invoke(this, new DoorEventArgs() {DoorOpen = DoorOpen, DoorClosed = DoorClosed});
+            DoorOpenEvent?.Invoke(this, new DoorEventArgs() {DoorOpen = DoorOpen, DoorClosed = DoorClosed});
         }
 
         public void OnDoorClosed()
         {
-            DoorEvent?.Invoke(this, new DoorEventArgs() { DoorOpen = DoorOpen, DoorClosed = DoorClosed });
+            DoorCloseEvent?.Invoke(this, new DoorEventArgs() { DoorOpen = DoorOpen, DoorClosed = DoorClosed });
         }
 
         public void LockDoor()

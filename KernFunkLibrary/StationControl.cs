@@ -38,6 +38,9 @@ namespace KernFunkLibrary
             _chargeControl = chargerControl;
             _display = display;
             _rfidReader = rfidReader;
+
+            _door.DoorCloseEvent += HandleDoorClosedEvent;
+            _door.DoorOpenEvent += HandleDoorOpenEvent;
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -109,7 +112,7 @@ namespace KernFunkLibrary
             }
         }
 
-        private void HandleDoorClosed(object sender, DoorEventArgs e)
+        private void HandleDoorClosedEvent(object sender, DoorEventArgs e)
         {
             if(e.DoorClosed)
             {
