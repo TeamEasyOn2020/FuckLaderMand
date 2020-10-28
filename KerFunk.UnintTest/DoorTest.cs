@@ -11,10 +11,22 @@ namespace KerFunk.UnintTest
     class DoorTest
     {
         private IDoor _uut;
+        private DoorEventArgs _receivedEventArgs;
         [SetUp]
         public void Setup()
         {
             _uut = new DoorSimulator();
+            _receivedEventArgs = null;
+
+
+            _uut.DoorOpenEvent += ReceivedEventArgs;
+            _uut.DoorCloseEvent += ReceivedEventArgs;
+
+        }
+
+        private void ReceivedEventArgs(object o, DoorEventArgs a)
+        {
+            _receivedEventArgs = a;
         }
 
         [Test]
@@ -36,24 +48,21 @@ namespace KerFunk.UnintTest
         [Test]
         public void OnDoorOpened_EventInvoked_EventArgsDoorOpenTrueDoorClosedFalse()
         {
-            var control = new ControlDoorEvents(_uut);
-
+            
             _uut.UnlockDoor();
             _uut.OnDoorOpened();
 
-            Assert.That(control.DoorOpen == true && control.DoorClosed == false);
+            Assert.That(_receivedEventArgs.DoorOpen == true && _receivedEventArgs.DoorClosed == false);
 
         }
 
         [Test]
         public void OnDoorClosed_EventInvoked_EventArgsDoorOpenFalseDoorClosedTrue()
         {
-            var control = new ControlDoorEvents(_uut);
-
             _uut.LockDoor();
             _uut.OnDoorClosed();
 
-            Assert.That(control.DoorOpen == false && control.DoorClosed == true);
+            Assert.That(_receivedEventArgs.DoorOpen == false && _receivedEventArgs.DoorClosed == true);
 
         }
 
@@ -61,20 +70,5 @@ namespace KerFunk.UnintTest
 
     }
 
-    public class ControlDoorEvents
-    {
-        public bool DoorOpen { get; set; }
-        public bool DoorClosed { get; set; }
-        public ControlDoorEvents(IDoor door)
-        {
-            door.DoorOpenEvent+= HandleDoorEvent;
-            door.DoorCloseEvent+= HandleDoorEvent;
-        }
 
-        private void HandleDoorEvent(object door, DoorEventArgs e)
-        {
-            DoorOpen = e.DoorOpen;
-            DoorClosed = e.DoorClosed;
-        }
-    }
 }

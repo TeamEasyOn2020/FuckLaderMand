@@ -6,7 +6,9 @@ namespace KernFunkLibrary
     {
         private IDisplay _display;
         private IUsbCharger _iUsbCharger;
-        public bool IsConnected => _iUsbCharger.Connected;
+        public bool IsConnected()
+        { return _iUsbCharger.Connected; }
+        
 
         public ChargerControlSimulator(IDisplay display, IUsbCharger usbCharger)
         {
