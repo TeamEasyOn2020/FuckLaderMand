@@ -114,6 +114,21 @@ namespace KerFunk.UnintTest
             //Assert
             Assert.AreEqual(uut.State, StationControl.LadeskabState.Locked); 
 
+        }         
+        
+        [Test]
+        public void HandleRfidDetectedWhileAvailable_EventFiredIsConnectedTrue_OldIdIsRfidId()
+        {
+            //Setup
+            uut.State = StationControl.LadeskabState.Available;
+            uut.OldId = 0;
+            _chargerControl.IsConnected().Returns(true);
+            _rfidReader.IdRegisteredEvent += Raise.EventWith(new RfidEventArgs() {Id = 4});
+
+
+            //Assert
+            Assert.AreEqual(uut.OldId, 4); 
+
         }        
         
         [Test]
