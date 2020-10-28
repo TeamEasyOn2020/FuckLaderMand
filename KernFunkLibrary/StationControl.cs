@@ -14,7 +14,7 @@ namespace KernFunkLibrary
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
@@ -27,21 +27,26 @@ namespace KernFunkLibrary
         private int _oldId;
         private IDoor _door;
         private IDisplay _display;
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
         private IRfidReader _rfidReader;
+        private IWriter _writer;
 
 
         // Her mangler constructor
-        public StationControl (IDoor door, IChargerControl chargerControl, IDisplay display, IRfidReader rfidReader)
+        public StationControl (IDoor door, IChargerControl chargerControl, IDisplay display, IRfidReader rfidReader, IWriter writer)
         {
             _door = door;
             _chargeControl = chargerControl;
             _display = display;
             _rfidReader = rfidReader;
+            _writer = writer;
 
             _door.DoorCloseEvent += HandleDoorClosedEvent;
             _door.DoorOpenEvent += HandleDoorOpenEvent;
+            _rfidReader.IdRegisteredEvent += HandleRfidRegisteretEvent;
         }
+
+        public int OldId { get; set; }
+        public LadeskabState State { get; set; }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
@@ -55,10 +60,9 @@ namespace KernFunkLibrary
                         _door.LockDoor();
                         _chargeControl.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        }
+                        
+                        _writer.WriteLine(DateTime.Now + $": Skab låst med RFID: {id}");
+                        
 
                         _display.ShowStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
@@ -80,10 +84,9 @@ namespace KernFunkLibrary
                     {
                         _chargeControl.StopCharge();
                         _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
+
+                        _writer.WriteLine(DateTime.Now + $": Skab låst op med RFID: {id}");
+                        
 
                         _display.ShowStationMessage("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
