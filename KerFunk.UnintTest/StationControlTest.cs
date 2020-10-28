@@ -19,7 +19,7 @@ namespace KerFunk.UnintTest
         public void Setup()
         {
             _door = Substitute.For<IDoor>();
-            _display = Substitute.For<IDisplay>(Substitute.For<IOutput>());
+            _display = Substitute.For<IDisplay>(Substitute.For<IStationControlOutput>());
             _rfidReader = Substitute.For<IRfidReader>();
             _chargerControl = Substitute.For<IChargerControl>();
             _writer = Substitute.For<IWriter>();

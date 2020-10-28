@@ -6,9 +6,9 @@ namespace KernFunkLibrary
 {
     public class DisplaySimulator : IDisplay
     {
-        private IOutput _output;
+        private IStationControlOutput _output;
 
-        public DisplaySimulator(IOutput output)
+        public DisplaySimulator(IStationControlOutput output)
         {
             _output = output;
         }
