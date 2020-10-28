@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernFunkLibrary", "KernFunkLibrary\KernFunkLibrary.csproj", "{DF123023-2701-42A8-B541-075D73EC72D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KernFunkLibrary", "KernFunkLibrary\KernFunkLibrary.csproj", "{DF123023-2701-42A8-B541-075D73EC72D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KerFunk.UnintTest", "KerFunk.UnintTest\KerFunk.UnintTest.csproj", "{2DCB507B-3FB9-4A62-8AAE-1B008AA8A401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KerFunk.UnintTest", "KerFunk.UnintTest\KerFunk.UnintTest.csproj", "{2DCB507B-3FB9-4A62-8AAE-1B008AA8A401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{37FEECD4-7291-4603-9B59-1FC742A35671}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2DCB507B-3FB9-4A62-8AAE-1B008AA8A401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DCB507B-3FB9-4A62-8AAE-1B008AA8A401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DCB507B-3FB9-4A62-8AAE-1B008AA8A401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37FEECD4-7291-4603-9B59-1FC742A35671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37FEECD4-7291-4603-9B59-1FC742A35671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37FEECD4-7291-4603-9B59-1FC742A35671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37FEECD4-7291-4603-9B59-1FC742A35671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

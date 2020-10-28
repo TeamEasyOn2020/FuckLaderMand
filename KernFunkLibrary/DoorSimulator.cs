@@ -8,6 +8,7 @@ namespace KernFunkLibrary
         public event EventHandler<DoorEventArgs> DoorCloseEvent;
 
         private DoorEventArgs door;
+
         public bool DoorOpen { get; private set; }
         public bool DoorClosed { get; private set; }
         public void OnDoorOpened()
