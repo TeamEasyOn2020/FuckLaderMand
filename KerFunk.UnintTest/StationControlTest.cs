@@ -11,6 +11,7 @@ namespace KerFunk.UnintTest
         private IDisplay _display;
         private IRfidReader _rfidReader;
         private IChargerControl _chargerControl;
+        private IWriter _writer;
 
         private StationControl uut;
 
@@ -21,8 +22,9 @@ namespace KerFunk.UnintTest
             _display = Substitute.For<IDisplay>(Substitute.For<IOutput>());
             _rfidReader = Substitute.For<IRfidReader>();
             _chargerControl = Substitute.For<IChargerControl>();
-
-            uut = new StationControl(_door, _chargerControl, _display, _rfidReader);
+            _writer = Substitute.For<IWriter>();
+            _writer.LogFile = "LogFile.txt";
+            uut = new StationControl(_door, _chargerControl, _display, _rfidReader, _writer);
         }
 
         [Test]
