@@ -45,23 +45,31 @@ namespace KernFunkLibrary
             _rfidReader.IdRegisteredEvent += HandleRfidRegisteretEvent;
         }
 
-        public int OldId { get; set; }
-        public LadeskabState State { get; set; }
+        public int OldId
+        {
+            get => _oldId;
+            set => _oldId = value;
+        }
+        public LadeskabState State
+        {
+            get => _state;
+            set => _state = value;
+        }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+        private void HandleRfidRegisteretEvent(object sender, RfidEventArgs e)
         {
             switch (_state)
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_chargeControl.IsConnected)
+                    if (_chargeControl.IsConnected())
                     {
                         _door.LockDoor();
                         _chargeControl.StartCharge();
-                        _oldId = id;
+                        _oldId = e.Id;
                         
-                        _writer.WriteLine(DateTime.Now + $": Skab låst med RFID: {id}");
+                        _writer.WriteLine(DateTime.Now + $": Skab låst med RFID: {e.Id}");
                         
 
                         _display.ShowStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
@@ -80,12 +88,12 @@ namespace KernFunkLibrary
 
                 case LadeskabState.Locked:
                     // Check for correct ID
-                    if (id == _oldId)
+                    if (e.Id == _oldId)
                     {
                         _chargeControl.StopCharge();
                         _door.UnlockDoor();
 
-                        _writer.WriteLine(DateTime.Now + $": Skab låst op med RFID: {id}");
+                        _writer.WriteLine(DateTime.Now + $": Skab låst op med RFID: {e.Id}");
                         
 
                         _display.ShowStationMessage("Tag din telefon ud af skabet og luk døren");
@@ -100,11 +108,6 @@ namespace KernFunkLibrary
             }
         }
 
-        // Her mangler de andre trigger handlere
-        private void HandleRfidRegisteretEvent(object sender, RfidEventArgs e)
-        {
-            RfidDetected(e.Id);
-        }
 
         private void HandleDoorOpenEvent(object sender, DoorEventArgs e)
         {
