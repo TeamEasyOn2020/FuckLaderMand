@@ -32,7 +32,7 @@ namespace KerFunk.UnintTest
             Assert.That(_uut.DoorOpen == true && _uut.DoorClosed == false);
 
         }
-
+         
         [Test]
         public void OnDoorOpened_EventInvoked_EventArgsDoorOpenTrueDoorClosedFalse()
         {
@@ -67,7 +67,8 @@ namespace KerFunk.UnintTest
         public bool DoorClosed { get; set; }
         public ControlDoorEvents(IDoor door)
         {
-            door.DoorEvent+= HandleDoorEvent;
+            door.DoorOpenEvent+= HandleDoorEvent;
+            door.DoorCloseEvent+= HandleDoorEvent;
         }
 
         private void HandleDoorEvent(object door, DoorEventArgs e)
