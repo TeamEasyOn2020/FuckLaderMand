@@ -12,14 +12,16 @@ namespace KerFunk.UnintTest
         private IRfidReader _rfidReader;
         private IChargerControl _chargerControl;
         private IWriter _writer;
+        private IStationControlOutput _output;
 
         private StationControl uut;
 
         [SetUp]
         public void Setup()
         {
+            _output = Substitute.For<IStationControlOutput>();
             _door = Substitute.For<IDoor>();
-            _display = Substitute.For<IDisplay>(Substitute.For<IStationControlOutput>());
+            _display = Substitute.For<IDisplay>();
             _rfidReader = Substitute.For<IRfidReader>();
             _chargerControl = Substitute.For<IChargerControl>();
             _writer = Substitute.For<IWriter>();
