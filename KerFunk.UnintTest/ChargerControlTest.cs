@@ -54,7 +54,25 @@ namespace KerFunk.UnintTest
             _uut.StopCharge();
 
             UsbCharger.Received(1).StopCharge();
+            
+        }
 
+        [TestCase(0)]
+        [TestCase(100)]
+        [TestCase(500)]
+        public void HandleCurrentEvent_SetValue_EventTriggered(double current)
+        {
+            UsbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = current});
+
+            Display.Received().ShowChargingMessage($"Current is: {current}");
+        }
+
+        [Test]
+        public void HandleCurrentEvent_CurrentReachedStopCharge_StopChargeCalled()
+        {
+            UsbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2.5 });
+
+            UsbCharger.Received().StopCharge();
         }
 
     }

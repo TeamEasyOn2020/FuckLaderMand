@@ -79,10 +79,10 @@ namespace KerFunk.UnintTest
         public void HandleDoorCloseEvent_EventFired_IndlaesMessageDisplayed()
         {
             //Setup
-            _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
             _chargerControl.IsConnected().Returns(true);
+            _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
             //Assert
-            _display.Received().ShowStationMessage("Indlæs RFID");
+            _display.Received().ShowStationMessage("Indlæs Rfid");
         }
 
         [Test]
