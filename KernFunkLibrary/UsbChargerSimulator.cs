@@ -28,7 +28,7 @@ namespace KernFunkLibrary
         public UsbChargerSimulator()
         {
             CurrentValue = 0.0;
-            Connected = true;
+            Connected = false;
             _overload = false;
 
             _timer = new System.Timers.Timer();

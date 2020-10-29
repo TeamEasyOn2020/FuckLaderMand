@@ -7,43 +7,67 @@ namespace KernFunkLibrary
     {
         static void Main(string[] args)
         {
-            // Assemble your system here from all the classes
+            //Assemble your system here from all the classes
+            //Display
+            Output output = new Output();
+            DisplaySimulator display = new DisplaySimulator(output);
 
-            //bool finish = false;
-            //do
-            //{
-            //    string input;
-            //    System.Console.WriteLine("Indtast E, O, C, R: ");
-            //    input = Console.ReadLine();
-            //    if (string.IsNullOrEmpty(input)) continue;
+            //ChargeControl
+            UsbChargerSimulator usbChargerSimulator = new UsbChargerSimulator();
+            ChargerControlSimulator chargerControlSimulator = new ChargerControlSimulator(display, usbChargerSimulator);
 
-            //    switch (input[0])
-            //    {
-            //        case 'E':
-            //            finish = true;
-            //            break;
+            //Door
+            DoorSimulator door = new DoorSimulator();
 
-            //        case 'O':
-            //            door.OnDoorOpen();
-            //            break;
+            //RfidReader
+            RfidReaderSimulator readerSimulator = new RfidReaderSimulator();
 
-            //        case 'C':
-            //            door.OnDoorClose();
-            //            break;
+            //Writer
+            WriterSimulator writer = new WriterSimulator("log.txt");
 
-            //        case 'R':
-            //            System.Console.WriteLine("Indtast RFID id: ");
-            //            string idString = System.Console.ReadLine();
+            //StationControl
+            StationControl stationControl = new StationControl(door, chargerControlSimulator, display, readerSimulator, writer);
 
-            //            int id = Convert.ToInt32(idString);
-            //            rfidReader.OnRfidRead(id);
-            //            break;
+            bool finish = false;
+            do
+            {
+                string input;
+                System.Console.WriteLine("Indtast E - End, O - Open door, C - Close door, R - Indtast rfid, P - Tilslut Telefon, D - Frakobel Telefon");
+                input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input)) continue;
 
-            //        default:
-            //            break;
-            //    }
+                switch (input[0])
+                {
+                    case 'E':
+                        finish = true;
+                        break;
 
-            //} while (!finish);
+                    case 'O':
+                        door.OnDoorOpened();
+                        break;
+
+                    case 'C':
+                        door.OnDoorClosed();
+                        break;
+                    case 'P':
+                        usbChargerSimulator.SimulateConnected(true);
+                        break;
+                    case 'D':
+                        usbChargerSimulator.SimulateConnected(false);
+                        break;
+                    case 'R':
+                        System.Console.WriteLine("Indtast RFID id: ");
+                        string idString = System.Console.ReadLine();
+
+                        int id = Convert.ToInt32(idString);
+                        readerSimulator.SetId(id);
+                        break;
+
+                    default:
+                        break;
+                }
+
+            } while (!finish);
         }
     }
 }

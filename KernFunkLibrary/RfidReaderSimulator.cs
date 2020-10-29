@@ -12,11 +12,10 @@ namespace KernFunkLibrary
 
         public void SetId(int id)
         {
-            if (id != oldId)
-            {
-                IdRegistered(new RfidEventArgs { Id = id });
-                oldId = id;
-            }
+
+            IdRegistered(new RfidEventArgs { Id = id });
+            oldId = id;
+
         }
 
         public event EventHandler<RfidEventArgs> IdRegisteredEvent;

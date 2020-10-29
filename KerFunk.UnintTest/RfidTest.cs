@@ -44,12 +44,12 @@ namespace KerFunk.UnintTest
         }
 
         [Test]
-        public void SetId_SameValue_OneEventTriggered()
+        public void SetId_SameValue_TwoEventsTriggered()
         {
             _uut.SetId(1);
             _uut.SetId(1);
 
-            Assert.That(_numberOfEvents, Is.EqualTo(1));
+            Assert.That(_numberOfEvents, Is.EqualTo(2));
         }
 
         [Test]
