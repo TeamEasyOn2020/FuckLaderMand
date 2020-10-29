@@ -33,6 +33,7 @@ namespace KerFunk.UnintTest
         public void HandleDoorOpenEvent_EventFired_DoorOpenState()
         {
             //Setup
+            _chargerControl.IsConnected().Returns(false);
             _door.DoorOpenEvent += Raise.EventWith(new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
 
             //Assert
@@ -55,11 +56,51 @@ namespace KerFunk.UnintTest
 
             //Assert
             Assert.That(uut.State != StationControl.LadeskabState.Locked);
+        }     
+        
+        [Test]
+        public void HandleDoorOpenEvent_EventFiredLadeskabLocked_DisplayMessage()
+        {
+            //Setup
+            _chargerControl.IsConnected().Returns(true);
+            uut.State = StationControl.LadeskabState.Locked;
+            _door.DoorOpenEvent += Raise.EventWith(new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
+
+            //Assert
+            _display.Received(1).ShowStationMessage("Indlæs RFID For at åbne døren");
         }
+        
+        [Test]
+        public void HandleDoorOpenEvent_EventFiredLadeskabNotLocked_DisplayMessage()
+        {
+            //Setup
+            _chargerControl.IsConnected().Returns(true);
+            uut.State = StationControl.LadeskabState.DoorOpen;
+            _door.DoorOpenEvent += Raise.EventWith(new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
+
+            //Assert
+            
+            _display.Received(1).ShowStationMessage("Tag din telefon");
+        }
+        
+        [Test]
+        public void HandleDoorOpenEvent_EventFiredLadeskabNotLocked_DoorOpenState()
+        {
+            //Setup
+            _chargerControl.IsConnected().Returns(true);
+            uut.State = StationControl.LadeskabState.ReadyToCharge;
+            _door.DoorOpenEvent += Raise.EventWith(new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
+
+            //Assert
+            
+            Assert.AreEqual(uut.State,StationControl.LadeskabState.DoorOpen);
+        }
+
         [Test]
         public void HandleDoorCloseEvent_EventFired_DoorOpenState()
         {
             //Setup
+            _chargerControl.IsConnected().Returns(false);
             _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = true, DoorClosed = false});
 
             //Assert
@@ -70,6 +111,7 @@ namespace KerFunk.UnintTest
         public void HandleDoorOpenEvent_EventFired_TilslutMessageDisplayed()
         {
             //Setup
+            _chargerControl.IsConnected().Returns(false);
             _door.DoorOpenEvent += Raise.EventWith(new DoorEventArgs() {DoorOpen = true, DoorClosed = false});
 
             //Assert
@@ -83,6 +125,15 @@ namespace KerFunk.UnintTest
             _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
             //Assert
             _display.Received().ShowStationMessage("Indlæs Rfid");
+        }
+        [Test]
+        public void HandleDoorCloseEvent_EventFiredDeviceNotConnected_AvailableMessageDisplayed()
+        {
+            //Setup
+            _chargerControl.IsConnected().Returns(false);
+            _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
+            //Assert
+            _display.Received().ShowStationMessage("Available");
         }
 
         [Test]

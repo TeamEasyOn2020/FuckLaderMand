@@ -127,6 +127,7 @@ namespace KernFunkLibrary
             else if (e.DoorOpen && _chargeControl.IsConnected() && State != LadeskabState.Locked)
             {
                 _display.ShowStationMessage("Tag din telefon");
+                State = LadeskabState.DoorOpen;
             }
         }
 
