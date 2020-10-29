@@ -22,7 +22,7 @@ namespace KerFunk.UnintTest
         [Test]
         public void ctor_IsConnected()
         {
-            Assert.That(_uut.Connected, Is.True);
+            Assert.That(_uut.Connected, Is.False);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace KerFunk.UnintTest
         {
             ManualResetEvent pause = new ManualResetEvent(false);
             double lastValue = 0;
-
+            _uut.SimulateConnected(true);
             _uut.CurrentValueEvent += (o, args) =>
             {
                 lastValue = args.Current;
@@ -152,7 +152,7 @@ namespace KerFunk.UnintTest
             {
                 lastValue = args.Current;
             };
-
+            _uut.SimulateConnected(true);
             // First value should be high
             _uut.SimulateOverload(true);
 

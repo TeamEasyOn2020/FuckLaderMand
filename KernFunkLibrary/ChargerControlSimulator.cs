@@ -29,6 +29,10 @@ namespace KernFunkLibrary
 
         public void HandleCurrentEvent(object sender, CurrentEventArgs e)
         {
+            if(e.Current == 2.5)
+                StopCharge();
+            //else if (e.Current ==)
+
             _display.ShowChargingMessage($"Current is: {e.Current}");
         }
     }

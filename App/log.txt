@@ -1,0 +1,12 @@
+29-10-2020 12:15:59: Skab låst med RFID: 14
+29-10-2020 12:16:02: Skab låst op med RFID: 14
+29-10-2020 12:16:53: Skab låst med RFID: 1
+29-10-2020 12:16:59: Skab låst op med RFID: 1
+29-10-2020 12:29:07: Skab låst med RFID: 13
+29-10-2020 12:29:12: Skab låst op med RFID: 13
+29-10-2020 12:30:44: Skab låst med RFID: 13
+29-10-2020 12:30:48: Skab låst op med RFID: 13
+29-10-2020 12:31:26: Skab låst med RFID: 13
+29-10-2020 12:37:27: Skab låst med RFID: 14
+29-10-2020 12:37:57: Skab låst med RFID: 1
+29-10-2020 12:38:15: Skab låst op med RFID: 1

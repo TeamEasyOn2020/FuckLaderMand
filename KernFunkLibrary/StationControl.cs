@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,8 @@ namespace KernFunkLibrary
         {
             Available,
             Locked,
-            DoorOpen
+            DoorOpen,
+            ReadyToCharge,
         };
 
         // Her mangler flere member variable
@@ -39,7 +41,7 @@ namespace KernFunkLibrary
             _display = display;
             _rfidReader = rfidReader;
             _writer = writer;
-
+            State = LadeskabState.Available;
             _door.DoorCloseEvent += HandleDoorClosedEvent;
             _door.DoorOpenEvent += HandleDoorOpenEvent;
             _rfidReader.IdRegisteredEvent += HandleRfidRegisteretEvent;
@@ -61,7 +63,7 @@ namespace KernFunkLibrary
         {
             switch (_state)
             {
-                case LadeskabState.Available:
+                case LadeskabState.ReadyToCharge:
                     // Check for ladeforbindelse
                     if (_chargeControl.IsConnected())
                     {
@@ -82,6 +84,7 @@ namespace KernFunkLibrary
 
                     break;
 
+                case LadeskabState.Available:
                 case LadeskabState.DoorOpen:
                     // Ignore
                     break;
@@ -111,19 +114,33 @@ namespace KernFunkLibrary
 
         private void HandleDoorOpenEvent(object sender, DoorEventArgs e)
         {
-            if (e.DoorOpen)
+            if (e.DoorOpen && !_chargeControl.IsConnected())
             {
                 _display.ShowStationMessage("Tilslut Telefon");
-                _state = LadeskabState.DoorOpen;
+                State = LadeskabState.DoorOpen;
+
+            }
+            else if (e.DoorOpen && _chargeControl.IsConnected() && State == LadeskabState.Locked)
+            {
+                _display.ShowStationMessage("Indlæs RFID For at åbne døren");
+            }
+            else if (e.DoorOpen && _chargeControl.IsConnected() && State != LadeskabState.Locked)
+            {
+                _display.ShowStationMessage("Tag din telefon");
             }
         }
 
         private void HandleDoorClosedEvent(object sender, DoorEventArgs e)
         {
-            if(e.DoorClosed)
+            if(e.DoorClosed && _chargeControl.IsConnected())
             {
                 _display.ShowStationMessage("Indlæs Rfid");
-                _state = LadeskabState.Locked;
+                State = LadeskabState.ReadyToCharge;
+            }
+            else if (e.DoorClosed && !_chargeControl.IsConnected())
+            {
+                _display.ShowStationMessage("Available");
+                State = LadeskabState.Available;
             }
 
         }

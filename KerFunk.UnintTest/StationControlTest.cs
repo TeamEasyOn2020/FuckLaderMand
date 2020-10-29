@@ -45,7 +45,7 @@ namespace KerFunk.UnintTest
             _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
 
             //Assert
-            Assert.That(uut.State == StationControl.LadeskabState.Locked);
+            Assert.That(uut.State == StationControl.LadeskabState.Available);
         } 
         [Test]
         public void HandleDoorOpenEvent_EventFired_DoorCloseState()
@@ -80,9 +80,9 @@ namespace KerFunk.UnintTest
         {
             //Setup
             _door.DoorCloseEvent += Raise.EventWith(new DoorEventArgs() { DoorOpen = false, DoorClosed = true});
-
+            _chargerControl.IsConnected().Returns(true);
             //Assert
-            _display.Received().ShowStationMessage("Indlæs Rfid");
+            _display.Received().ShowStationMessage("Indlæs RFID");
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace KerFunk.UnintTest
         public void HandleRfidDetectedWhileAvailable_EventFiredIsConnectedTrue_Locked()
         {
             //Setup
-            uut.State = StationControl.LadeskabState.Available;
+            uut.State = StationControl.LadeskabState.ReadyToCharge;
             _chargerControl.IsConnected().Returns(true);
             _rfidReader.IdRegisteredEvent += Raise.EventWith(new RfidEventArgs() {Id = 4});
 
@@ -120,7 +120,7 @@ namespace KerFunk.UnintTest
         public void HandleRfidDetectedWhileAvailable_EventFiredIsConnectedTrue_OldIdIsRfidId()
         {
             //Setup
-            uut.State = StationControl.LadeskabState.Available;
+            uut.State = StationControl.LadeskabState.ReadyToCharge;
             uut.OldId = 0;
             _chargerControl.IsConnected().Returns(true);
             _rfidReader.IdRegisteredEvent += Raise.EventWith(new RfidEventArgs() {Id = 4});
@@ -135,14 +135,14 @@ namespace KerFunk.UnintTest
         public void HandleRfidDetectedWhileAvailable_EventFiredIsConnectedFalse_AvailableDisplayErrorMessage()
         {
             //Setup
-            uut.State = StationControl.LadeskabState.Available;
+            uut.State = StationControl.LadeskabState.ReadyToCharge;
             _chargerControl.IsConnected().Returns(false);
             _rfidReader.IdRegisteredEvent += Raise.EventWith(new RfidEventArgs() {Id = 4});
 
 
             //Assert
             _display.Received().ShowStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
-            Assert.AreEqual(uut.State, StationControl.LadeskabState.Available);
+            Assert.AreEqual(uut.State, StationControl.LadeskabState.ReadyToCharge);
         }  
         
         [Test]

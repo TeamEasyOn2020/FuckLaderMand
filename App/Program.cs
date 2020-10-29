@@ -23,16 +23,16 @@ namespace KernFunkLibrary
             RfidReaderSimulator readerSimulator = new RfidReaderSimulator();
 
             //Writer
-
+            WriterSimulator writer = new WriterSimulator("log.txt");
 
             //StationControl
-            StationControl stationControl = new StationControl(door, chargerControlSimulator, display, readerSimulator, );
+            StationControl stationControl = new StationControl(door, chargerControlSimulator, display, readerSimulator, writer);
 
             bool finish = false;
             do
             {
                 string input;
-                System.Console.WriteLine("Indtast E, O, C, R: ");
+                System.Console.WriteLine("Indtast E - End, O - Open door, C - Close door, R - Indtast rfid, P - Tilslut Telefon, D - Frakobel Telefon");
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input)) continue;
 
@@ -43,19 +43,24 @@ namespace KernFunkLibrary
                         break;
 
                     case 'O':
-                        door.OnDoorOpen();
+                        door.OnDoorOpened();
                         break;
 
                     case 'C':
-                        door.OnDoorClose();
+                        door.OnDoorClosed();
                         break;
-
+                    case 'P':
+                        usbChargerSimulator.SimulateConnected(true);
+                        break;
+                    case 'D':
+                        usbChargerSimulator.SimulateConnected(false);
+                        break;
                     case 'R':
                         System.Console.WriteLine("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
 
                         int id = Convert.ToInt32(idString);
-                        rfidReader.OnRfidRead(id);
+                        readerSimulator.SetId(id);
                         break;
 
                     default:
