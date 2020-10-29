@@ -44,6 +44,12 @@ namespace KerFunk.UnintTest
             var lastLine = File.ReadLines(_uut.LogFile).Last();
             Assert.AreEqual(message, lastLine);
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            File.Delete(_uut.LogFile);
+        }
     }
 
 

@@ -165,6 +165,27 @@ namespace KerFunk.UnintTest
         }
 
         [Test]
+        public void SimulateNotOverload_Start_ReceivesHighValueImmediately()
+        {
+            double lastValue = 0;
+
+            _uut.CurrentValueEvent += (o, args) =>
+            {
+                lastValue = args.Current;
+            };
+            _uut.SimulateConnected(true);
+            // First value should be high
+            _uut.SimulateOverload(false);
+
+            // Start
+            _uut.StartCharge();
+
+            // Should not wait for first tick, should send overload immediately
+
+            Assert.That(lastValue, Is.EqualTo(500.0));
+        }
+
+        [Test]
         public void SimulateDisconnected_Start_ReceivesZeroValueImmediately()
         {
             double lastValue = 1000;
