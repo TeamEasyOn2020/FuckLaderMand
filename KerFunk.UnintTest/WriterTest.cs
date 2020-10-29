@@ -19,7 +19,11 @@ namespace KerFunk.UnintTest
 
         }
 
-
+        [Test]
+        public void WriterSimulator_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(() => _uut = new WriterSimulator(null));
+        }
         
         [Test]
         public void WriteLine_FileWasCreated()
